@@ -1,13 +1,13 @@
 #!/bin/bash
 rm -r /var/lib/docker/volumes/docker-server_hue-stats/*
 rm -r /var/lib/docker/volumes/docker-server_hue-demos/*
-ln -s /home/qw/docker-fobr/docker-volumes/hue-stats/ /var/lib/docker/volumes/docker-server_hue-stats/_data
-ln -s /home/qw/docker-fobr/docker-volumes/hue-demos/ /var/lib/docker/volumes/docker-server_hue-demos/_data
+ln -s /home/ubuntu/docker-fobr/docker-volumes/hue-stats/ /var/lib/docker/volumes/docker-server_hue-stats/_data
+ln -s /home/ubuntu/docker-fobr/docker-volumes/hue-demos/ /var/lib/docker/volumes/docker-server_hue-demos/_data
 
 rm -r /var/lib/docker/volumes/docker-server_fone-stats/*
 rm -r /var/lib/docker/volumes/docker-server_fone-demos/*
-ln -s /home/qw/docker-fobr/docker-volumes/fone-stats/ /var/lib/docker/volumes/docker-server_fone-stats/_data
-ln -s /home/qw/docker-fobr/docker-volumes/fone-demos/ /var/lib/docker/volumes/docker-server_fone-demos/_data
+ln -s /home/ubuntu/docker-fobr/docker-volumes/fone-stats/ /var/lib/docker/volumes/docker-server_fone-stats/_data
+ln -s /home/ubuntu/docker-fobr/docker-volumes/fone-demos/ /var/lib/docker/volumes/docker-server_fone-demos/_data
 
 rm -r /var/lib/docker/volumes/docker-server_configs/*
-ln -s /home/qw/docker-fobr/docker-volumes/configs/ /var/lib/docker/volumes/docker-server_configs/_data
+ln -s /home/ubuntu/docker-fobr/docker-volumes/configs/ /var/lib/docker/volumes/docker-server_configs/_data
