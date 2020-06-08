@@ -1,0 +1,131 @@
+---
+version: "3.7"
+services:
+  map-repo:
+    image: fortressone/map-repo:latest
+    volumes:
+      - assets:/map-repo/fortress/
+  updater:
+    image: fortressone/updater:latest
+    restart: always
+    depends_on:
+      - map-repo
+    environment:
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_ACCESS_KEY_ID
+      - S3_DEMO_URI
+      - S3_STATS_URI
+    volumes:
+      - assets:/updater/map-repo/fortress/
+      - master_dats:/updater/dats/master/
+      - staging_dats:/updater/dats/staging/
+      - fone-demos:/updater/demos/fo/
+      - fone-stats:/updater/stats/fo/
+      - hue-demos:/updater/demos/hue/
+      - hue-stats:/updater/stats/hue/ 
+  00-hue:
+    image: fortressone/fortressonesv:latest
+    depends_on:
+      - updater
+    stdin_open: true
+    tty: true
+    restart: always
+    command: |
+      -ip ${FO_IP}
+      -port 27500
+      +set hostname "${FO_HOSTNAME} FortressOne HueTF 00"
+      +set password "${FO_PASSWORD}"
+      +set rcon_password "${FO_RCON_PASSWORD}"
+      +localinfo adminpwd "${FO_ADMINPWD}"
+      +exec fo_quadmode.cfg
+      +exec configs/huetf.cfg
+      +map 2fort5r
+    network_mode: "host"
+    volumes:
+      - assets:/fortressonesv/fortress/assets/
+      - staging_dats:/fortressonesv/fortress/dats/
+      - hue-demos:/fortressonesv/fortress/demos/
+      - hue-stats:/fortressonesv/fortress/data/
+      - configs:/fortressonesv/fortress/configs/
+  02-hue:
+    image: fortressone/fortressonesv:latest
+    depends_on:
+      - updater
+    stdin_open: true
+    tty: true
+    restart: always
+    command: |
+      -ip ${FO_IP}
+      -port 27502
+      +set hostname "${FO_HOSTNAME} FortressOne HueTF 02"
+      +set password "${FO_PASSWORD}"
+      +set rcon_password "${FO_RCON_PASSWORD}"
+      +localinfo adminpwd "${FO_ADMINPWD}"
+      +exec fo_quadmode.cfg
+      +exec configs/huetf.cfg
+      +map 2fort5r
+    network_mode: "host"
+    volumes:
+      - assets:/fortressonesv/fortress/assets/
+      - staging_dats:/fortressonesv/fortress/dats/
+      - hue-demos:/fortressonesv/fortress/demos/
+      - hue-stats:/fortressonesv/fortress/data/
+      - configs:/fortressonesv/fortress/configs/
+  04-fo:
+    image: fortressone/fortressonesv:latest
+    depends_on:
+      - updater
+    stdin_open: true
+    tty: true
+    restart: always
+    command: |
+      -ip ${FO_IP}
+      -port 27504
+      +set hostname "${FO_HOSTNAME} FortressOne 04"
+      +set password "${FO_PASSWORD}"
+      +set rcon_password "${FO_RCON_PASSWORD}"
+      +localinfo adminpwd "${FO_ADMINPWD}"
+      +exec fo_quadmode.cfg
+      +exec configs/fone.cfg
+      +map 2fort5r
+    network_mode: "host"
+    volumes:
+      - assets:/fortressonesv/fortress/assets/
+      - staging_dats:/fortressonesv/fortress/dats/
+      - fone-demos:/fortressonesv/fortress/demos/
+      - fone-stats:/fortressonesv/fortress/data/
+      - configs:/fortressonesv/fortress/configs/
+  06-fo:
+    image: fortressone/fortressonesv:latest
+    depends_on:
+      - updater
+    stdin_open: true
+    tty: true
+    restart: always
+    command: |
+      -ip ${FO_IP}
+      -port 27506
+      +set hostname "${FO_HOSTNAME} FortressOne 06"
+      +set password "${FO_PASSWORD}"
+      +set rcon_password "${FO_RCON_PASSWORD}"
+      +localinfo adminpwd "${FO_ADMINPWD}"
+      +exec fo_quadmode.cfg
+      +exec configs/fone.cfg
+      +map 2fort5r
+    network_mode: "host"
+    volumes:
+      - assets:/fortressonesv/fortress/assets/
+      - staging_dats:/fortressonesv/fortress/dats/
+      - fone-demos:/fortressonesv/fortress/demos/
+      - fone-stats:/fortressonesv/fortress/data/
+      - configs:/fortressonesv/fortress/configs/
+volumes:
+  fone-demos:
+  fone-stats:
+  hue-demos:
+  hue-stats:
+  configs:
+  assets:
+  master_dats:
+  staging_dats:
+
