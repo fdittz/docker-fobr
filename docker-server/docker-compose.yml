@@ -33,7 +33,7 @@ services:
     command: |
       -ip ${FO_IP}
       -port 27500
-      +set hostname "${FO_HOSTNAME} FortressOne HueTF 00"
+      +set hostname "${FO_HOSTNAME} HueTF 00"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
@@ -43,7 +43,7 @@ services:
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - staging_dats:/fortressonesv/fortress/dats/
+      - master_dats:/fortressonesv/fortress/dats/
       - hue-demos:/fortressonesv/fortress/demos/
       - hue-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
@@ -57,7 +57,7 @@ services:
     command: |
       -ip ${FO_IP}
       -port 27502
-      +set hostname "${FO_HOSTNAME} FortressOne HueTF 02"
+      +set hostname "${FO_HOSTNAME} HueTF 02"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
@@ -67,7 +67,7 @@ services:
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - staging_dats:/fortressonesv/fortress/dats/
+      - master_dats:/fortressonesv/fortress/dats/
       - hue-demos:/fortressonesv/fortress/demos/
       - hue-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
@@ -91,7 +91,7 @@ services:
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - staging_dats:/fortressonesv/fortress/dats/
+      - master_dats:/fortressonesv/fortress/dats/
       - fone-demos:/fortressonesv/fortress/demos/
       - fone-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
@@ -115,9 +115,44 @@ services:
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - staging_dats:/fortressonesv/fortress/dats/
+      - master_dats:/fortressonesv/fortress/dats/
       - fone-demos:/fortressonesv/fortress/demos/
       - fone-stats:/fortressonesv/fortress/data/
+      - configs:/fortressonesv/fortress/configs/
+  08-practice:
+    image: fortressone/fortressonesv:latest
+    depends_on:
+      - updater
+    stdin_open: true
+    tty: true
+    restart: always
+    command: |
+      -ip ${FO_IP}
+      -port 27508
+      +set hostname "${FO_HOSTNAME} FOPractice 08"
+      +set password "${FO_PASSWORD}"
+      +set rcon_password "${FO_RCON_PASSWORD}"
+      +localinfo adminpwd "${FO_ADMINPWD}"
+      +exec fo_quadmode.cfg
+      +exec configs/fone.cfg
+      +set sv_cheats 1
+      +localinfo max_gren2_medic 999
+      +localinfo max_gren1_medic 999
+      +localinfo max_gren1_soldier 999
+      +localinfo max_gren2_soldier 999
+      +localinfo max_gren1_demoman 999
+      +localinfo max_gren2_demoman 999
+      +localinfo max_gren1_engineer 999
+      +localinfo max_gren2_engineer 999
+      +localinfo max_gren1_pyro 999
+      +localinfo max_gren2_pyro 999
+      +localinfo max_gren2_scout 999
+      +localinfo round_time 30
+      +map 2fort5r
+    network_mode: "host"
+    volumes:
+      - assets:/fortressonesv/fortress/assets/
+      - master_dats:/fortressonesv/fortress/dats/
       - configs:/fortressonesv/fortress/configs/
 volumes:
   fone-demos:
