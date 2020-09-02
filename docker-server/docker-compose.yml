@@ -129,7 +129,7 @@ services:
     command: |
       -ip ${FO_IP}
       -port 27508
-      +set hostname "${FO_HOSTNAME} FOPractice 08"
+      +set hostname "${FO_HOSTNAME} Practice 08"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
@@ -154,6 +154,15 @@ services:
       - assets:/fortressonesv/fortress/assets/
       - master_dats:/fortressonesv/fortress/dats/
       - configs:/fortressonesv/fortress/configs/
+  qwfwd:
+    image: fortressone/qwfwd:latest
+    stdin_open: true
+    tty: true
+    restart: always
+    command: |
+      30000 0.0.0.0
+      +set hostname "${FO_HOSTNAME} QWfwd"
+    network_mode: "host"
 volumes:
   fone-demos:
   fone-stats:

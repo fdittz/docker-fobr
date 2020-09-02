@@ -1,3 +1,4 @@
 *.env*
 !.env.example
 !.env.production_example
+fone-stats/
