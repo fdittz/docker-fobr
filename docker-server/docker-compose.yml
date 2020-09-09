@@ -154,6 +154,30 @@ services:
       - assets:/fortressonesv/fortress/assets/
       - master_dats:/fortressonesv/fortress/dats/
       - configs:/fortressonesv/fortress/configs/
+  10-test:
+    image: fortressone/fortressonesv:latest
+    depends_on:
+      - updater
+    stdin_open: true
+    tty: true
+    restart: always
+    command: |
+      -ip ${FO_IP}
+      -port 27510
+      +set hostname "${FO_HOSTNAME} TEST HueTF 10"
+      +set password "${FO_PASSWORD}"
+      +set rcon_password "${FO_RCON_PASSWORD}"
+      +localinfo adminpwd "${FO_ADMINPWD}"
+      +exec fo_quadmode.cfg
+      +exec configs/huetf.cfg
+      +map 2fort5r
+    network_mode: "host"
+    volumes:
+      - assets:/fortressonesv/fortress/assets/
+      - staging_dats:/fortressonesv/fortress/dats/
+      - hue-demos:/fortressonesv/fortress/demos/
+      - hue-stats:/fortressonesv/fortress/data/
+      - configs:/fortressonesv/fortress/configs/
   qwfwd:
     image: fortressone/qwfwd:latest
     stdin_open: true
