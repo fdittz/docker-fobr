@@ -1,15 +1,14 @@
 ---
 version: "3.7"
 services:
-  map-repo:
-    image: fortressone/map-repo:latest
-    volumes:
-      - assets:/map-repo/fortress/
-  updater:
-    image: fortressone/updater:latest
+  wtfapp-backend:
+    image: qwtfbrasil/wtfapp-backend:latest
     restart: always
-    depends_on:
-      - map-repo
+    ports:
+      - "80:80"
+  updater:
+    image: qwtfbrasil/updater-arm64:latest
+    restart: always
     environment:
       - AWS_SECRET_ACCESS_KEY
       - AWS_ACCESS_KEY_ID
@@ -22,9 +21,15 @@ services:
       - fone-demos:/updater/demos/fo/
       - fone-stats:/updater/stats/fo/
       - hue-demos:/updater/demos/hue/
-      - hue-stats:/updater/stats/hue/ 
+      - hue-stats:/updater/stats/hue/
+      - legacy-huetf-demos:/updater/demos/legacy-huetf
+      - legacy-huetf-stats:/updater/stats/legacy-huetf
+    deploy:
+      resources:
+        limits:
+          cpus: '0.10'
   00-hue:
-    image: fortressone/fortressonesv:latest
+    image: qwtfbrasil/fortressonesv-arm64:latest
     depends_on:
       - updater
     stdin_open: true
@@ -34,8 +39,10 @@ services:
       -ip ${FO_IP}
       -port 27500
       +set hostname "${FO_HOSTNAME} HueTF 00"
+      +serverinfo hostname "${FO_HOSTNAME} HueTF 00"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
+      +localinfo project_weapons on
       +localinfo adminpwd "${FO_ADMINPWD}"
       +exec fo_quadmode.cfg
       +exec configs/huetf.cfg
@@ -43,12 +50,12 @@ services:
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - master_dats:/fortressonesv/fortress/dats/
+      - hue_dats:/fortressonesv/fortress/dats/
       - hue-demos:/fortressonesv/fortress/demos/
       - hue-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
   02-hue:
-    image: fortressone/fortressonesv:latest
+    image: qwtfbrasil/fortressonesv-arm64:latest
     depends_on:
       - updater
     stdin_open: true
@@ -58,8 +65,10 @@ services:
       -ip ${FO_IP}
       -port 27502
       +set hostname "${FO_HOSTNAME} HueTF 02"
+      +serverinfo hostname "${FO_HOSTNAME} HueTF 02"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
+      +localinfo project_weapons on
       +localinfo adminpwd "${FO_ADMINPWD}"
       +exec fo_quadmode.cfg
       +exec configs/huetf.cfg
@@ -67,62 +76,68 @@ services:
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - master_dats:/fortressonesv/fortress/dats/
+      - hue_dats:/fortressonesv/fortress/dats/
       - hue-demos:/fortressonesv/fortress/demos/
       - hue-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
   04-fo:
-    image: fortressone/fortressonesv:latest
+    image: qwtfbrasil/fortressonesv-arm64:latest
     depends_on:
-      - updater
+     - updater
     stdin_open: true
     tty: true
     restart: always
     command: |
       -ip ${FO_IP}
       -port 27504
-      +set hostname "${FO_HOSTNAME} FortressOne 04"
+      +set hostname "${FO_HOSTNAME} FOne 04"
+      +serverinfo hostname "${FO_HOSTNAME} FOne 04"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
+      +localinfo em 1
+      +localinfo project_weapons on
       +exec fo_quadmode.cfg
       +exec configs/fone.cfg
       +map 2fort5r
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - master_dats:/fortressonesv/fortress/dats/
+      - staging_dats:/fortressonesv/fortress/dats/
       - fone-demos:/fortressonesv/fortress/demos/
       - fone-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
   06-fo:
-    image: fortressone/fortressonesv:latest
+    image: qwtfbrasil/fortressonesv-arm64:latest
     depends_on:
-      - updater
+     - updater
     stdin_open: true
     tty: true
     restart: always
     command: |
       -ip ${FO_IP}
       -port 27506
-      +set hostname "${FO_HOSTNAME} FortressOne 06"
+      +set hostname "${FO_HOSTNAME} FOne 06"
+      +serverinfo hostname "${FO_HOSTNAME} FOne 06"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
+      +localinfo em 1
+      +localinfo project_weapons on
       +exec fo_quadmode.cfg
       +exec configs/fone.cfg
       +map 2fort5r
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - master_dats:/fortressonesv/fortress/dats/
+      - staging_dats:/fortressonesv/fortress/dats/
       - fone-demos:/fortressonesv/fortress/demos/
       - fone-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
   08-practice:
-    image: fortressone/fortressonesv:latest
+    image: qwtfbrasil/fortressonesv-arm64:latest
     depends_on:
-      - updater
+     - updater
     stdin_open: true
     tty: true
     restart: always
@@ -130,6 +145,7 @@ services:
       -ip ${FO_IP}
       -port 27508
       +set hostname "${FO_HOSTNAME} Practice 08"
+      +serverinfo hostname "${FO_HOSTNAME} Practice 08"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
@@ -152,48 +168,48 @@ services:
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - master_dats:/fortressonesv/fortress/dats/
+      - staging_dats:/fortressonesv/fortress/dats/
       - configs:/fortressonesv/fortress/configs/
-  10-test:
-    image: fortressone/fortressonesv:latest
-    depends_on:
-      - updater
+  10-legacy-huetf:
+    image: qwtfbrasil/huetflegacy-arm64:latest
     stdin_open: true
     tty: true
     restart: always
     command: |
+      -game fortress
+      -nohome
       -ip ${FO_IP}
       -port 27510
-      +set hostname "${FO_HOSTNAME} TEST HueTF 10"
+      +set hostname "#Sao Januario, Meu Caldeirao Legacy HueTF 10"
+      +serverinfo hostname "#Sao Januario, Meu Caldeirao Legacy HueTF 10"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
-      +exec fo_quadmode.cfg
-      +exec configs/huetf.cfg
-      +map 2fort5r
+      +exec public.cfg
+      +map wellgl1
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - staging_dats:/fortressonesv/fortress/dats/
-      - hue-demos:/fortressonesv/fortress/demos/
-      - hue-stats:/fortressonesv/fortress/data/
-      - configs:/fortressonesv/fortress/configs/
+      - legacy-huetf-demos:/fortressonesv/fortress/demos/
+      - legacy-huetf-stats:/fortressonesv/fortress/data/
   qwfwd:
-    image: fortressone/qwfwd:latest
+    image: qwtfbrasil/qwfwd-arm64:latest
+    network_mode: "host"
     stdin_open: true
     tty: true
     restart: always
     command: |
       30000 0.0.0.0
       +set hostname "${FO_HOSTNAME} QWfwd"
-    network_mode: "host"
 volumes:
+  assets:
+  master_dats:
+  staging_dats:
   fone-demos:
   fone-stats:
   hue-demos:
   hue-stats:
   configs:
-  assets:
-  master_dats:
-  staging_dats:
-
+  hue_dats:
+  legacy-huetf-demos:
+  legacy-huetf-stats:

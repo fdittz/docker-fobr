@@ -2,3 +2,8 @@
 !.env.example
 !.env.production_example
 fone-stats/
+fone-demos/
+hue-stats/
+hue-demos/
+legacy-huetf-demos/
+legacy-huetf-stats/
