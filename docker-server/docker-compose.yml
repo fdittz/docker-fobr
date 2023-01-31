@@ -44,13 +44,14 @@ services:
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo project_weapons on
       +localinfo adminpwd "${FO_ADMINPWD}"
+      +set localinfo forequirelogin 0
       +exec fo_quadmode.cfg
       +exec configs/huetf.cfg
       +map 2fort5r
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - hue_dats:/fortressonesv/fortress/dats/
+      - master_dats:/fortressonesv/fortress/dats/
       - hue-demos:/fortressonesv/fortress/demos/
       - hue-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
@@ -70,13 +71,14 @@ services:
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo project_weapons on
       +localinfo adminpwd "${FO_ADMINPWD}"
+      +set localinfo forequirelogin 0
       +exec fo_quadmode.cfg
       +exec configs/huetf.cfg
       +map 2fort5r
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - hue_dats:/fortressonesv/fortress/dats/
+      - master_dats:/fortressonesv/fortress/dats/
       - hue-demos:/fortressonesv/fortress/demos/
       - hue-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
@@ -97,13 +99,14 @@ services:
       +localinfo adminpwd "${FO_ADMINPWD}"
       +localinfo em 1
       +localinfo project_weapons on
+      set localinfo forequirelogin 0
       +exec fo_quadmode.cfg
       +exec configs/fone.cfg
       +map 2fort5r
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - staging_dats:/fortressonesv/fortress/dats/
+      - master_dats:/fortressonesv/fortress/dats/
       - fone-demos:/fortressonesv/fortress/demos/
       - fone-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
@@ -124,13 +127,14 @@ services:
       +localinfo adminpwd "${FO_ADMINPWD}"
       +localinfo em 1
       +localinfo project_weapons on
+      +set localinfo forequirelogin 0
       +exec fo_quadmode.cfg
       +exec configs/fone.cfg
       +map 2fort5r
     network_mode: "host"
     volumes:
       - assets:/fortressonesv/fortress/assets/
-      - staging_dats:/fortressonesv/fortress/dats/
+      - master_dats:/fortressonesv/fortress/dats/
       - fone-demos:/fortressonesv/fortress/demos/
       - fone-stats:/fortressonesv/fortress/data/
       - configs:/fortressonesv/fortress/configs/
@@ -149,6 +153,7 @@ services:
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
+      +set localinfo forequirelogin 0
       +exec fo_quadmode.cfg
       +exec configs/fone.cfg
       +set sv_cheats 1
@@ -185,6 +190,7 @@ services:
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
+      +set localinfo forequirelogin 0
       +exec public.cfg
       +map wellgl1
     network_mode: "host"
