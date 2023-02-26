@@ -38,13 +38,12 @@ services:
     command: |
       -ip ${FO_IP}
       -port 27500
-      +set hostname "${FO_HOSTNAME} HueTF 00"
-      +serverinfo hostname "${FO_HOSTNAME} HueTF 00"
+      +set hostname "${FO_HOSTNAME} Hue 00"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
-      +localinfo project_weapons on
+      +serverinfo tfx 0
+      +localinfo fologinrequired 0
       +localinfo adminpwd "${FO_ADMINPWD}"
-      +set localinfo forequirelogin 0
       +exec fo_quadmode.cfg
       +exec configs/huetf.cfg
       +map 2fort5r
@@ -65,13 +64,13 @@ services:
     command: |
       -ip ${FO_IP}
       -port 27502
-      +set hostname "${FO_HOSTNAME} HueTF 02"
-      +serverinfo hostname "${FO_HOSTNAME} HueTF 02"
+      +set hostname "${FO_HOSTNAME} Hue 02"
+      +serverinfo hostname "${FO_HOSTNAME} Hue 02"
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
-      +localinfo project_weapons on
+      +serverinfo tfx 0
+      +localinfo fologinrequired 0
       +localinfo adminpwd "${FO_ADMINPWD}"
-      +set localinfo forequirelogin 0
       +exec fo_quadmode.cfg
       +exec configs/huetf.cfg
       +map 2fort5r
@@ -98,8 +97,7 @@ services:
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
       +localinfo em 1
-      +localinfo project_weapons on
-      set localinfo forequirelogin 0
+      +localinfo fologinrequired 0
       +exec fo_quadmode.cfg
       +exec configs/fone.cfg
       +map 2fort5r
@@ -126,8 +124,7 @@ services:
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
       +localinfo em 1
-      +localinfo project_weapons on
-      +set localinfo forequirelogin 0
+      +localinfo fologinrequired 0
       +exec fo_quadmode.cfg
       +exec configs/fone.cfg
       +map 2fort5r
@@ -153,7 +150,8 @@ services:
       +set password "${FO_PASSWORD}"
       +set rcon_password "${FO_RCON_PASSWORD}"
       +localinfo adminpwd "${FO_ADMINPWD}"
-      +set localinfo forequirelogin 0
+      +serverinfo tfx 0
+      +localinfo forequirelogin 0
       +exec fo_quadmode.cfg
       +exec configs/fone.cfg
       +set sv_cheats 1
@@ -187,10 +185,6 @@ services:
       -port 27510
       +set hostname "#Sao Januario, Meu Caldeirao Legacy HueTF 10"
       +serverinfo hostname "#Sao Januario, Meu Caldeirao Legacy HueTF 10"
-      +set password "${FO_PASSWORD}"
-      +set rcon_password "${FO_RCON_PASSWORD}"
-      +localinfo adminpwd "${FO_ADMINPWD}"
-      +set localinfo forequirelogin 0
       +exec public.cfg
       +map wellgl1
     network_mode: "host"
